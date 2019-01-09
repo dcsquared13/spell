@@ -1,5 +1,4 @@
 
-
 class LCSObject:
 
     line_ids = []
@@ -7,11 +6,7 @@ class LCSObject:
 
     def __init__(self, seq, line_id):
         self.lcs_seq = seq
-        self.line_ids.append(line_id)
-
-    def __call__(self, seq, line_id):
-        self.lcs_seq = seq
-        self.line_ids.append(line_id)
+        self.line_ids = [line_id]
 
     def get_lcs(self, seq):
         count = 0
@@ -51,8 +46,6 @@ class LCSObject:
 
         self.lcs_seq = temp.split()
 
-
-
     def length(self):
         return len(self.lcs_seq)
 
@@ -60,6 +53,6 @@ class LCSObject:
         return len(self.line_ids)
 
     def to_string(self):
-        return ' '.join(self.lcs_seq) + "{ " + ', '.join(self.line_ids) + " }"
+        return ' '.join(self.lcs_seq) + " : { " + ', '.join(str(x) for x in self.line_ids) + " }"
 
         

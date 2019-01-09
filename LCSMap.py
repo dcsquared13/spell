@@ -16,7 +16,7 @@ class LCSMap():
         if obj is None:
             self.lcs_objects.append(LCSObject(seq, self.line_id))
         else:
-            self.lcs_objects.append(obj)
+            obj.insert(seq, self.line_id)
 
     # will return a LCSObject
     def get_match(self, seq):
@@ -44,6 +44,6 @@ class LCSMap():
 
     # return the map as a string for testing
     def to_string(self):
-        print "Returning {} objects in LCSMap\n\n".format(self.size())
+        print "\nReturning {} objects in LCSMap:\n\n".format(self.size())
         for i in range(self.size()):
-            print "{}\n".format(self.object_at(i).to_string())
+            print "Object {}: {}\n".format(i, self.object_at(i).to_string())
