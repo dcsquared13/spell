@@ -3,11 +3,12 @@ from LCSObject import LCSObject
 
 class LCSMap():
 
-    def __init__(self):
+    def __init__(self, t):
         self.lcs_objects = []
         self.line_id = 0
+        self.threshold = t
 
-    # insert LCSObject into LCSMap
+    """Insert LCSObject into LCSMap"""
     def insert(self, entry):
         seq = entry.strip().split()
         obj = self.get_match(seq)
@@ -18,31 +19,32 @@ class LCSMap():
         else:
             obj.insert(seq, self.line_id)
 
-    # will return a LCSObject
+    """Will return a LCSObject"""
     def get_match(self, seq):
         best_match = None
         best_match_len = 0
 
         for obj in self.lcs_objects:
-            if obj.length() < len(seq) / 2 or obj.length() > len(seq) * 2:
+            if obj.length() < len(seq) * self.threshold or obj.length() > len(seq) / self.threshold:
                 continue
 
             lcs_len = obj.get_lcs(seq)
-            if lcs_len >= len(seq)/2 and lcs_len > best_match_len:
+            print "SEQ LEN: {} | LCS: {}".format(len(seq), lcs_len)
+            if lcs_len >= len(seq) * self.threshold and lcs_len > best_match_len:
                 best_match_len = lcs_len
                 best_match = obj
 
         return best_match
 
-    # return size of LCSMap
+    """Return size of LCSMap"""
     def size(self):
         return len(self.lcs_objects)
 
-    # return object at index
+    """Return object at index"""
     def object_at(self, idx):
         return self.lcs_objects[idx]
 
-    # return the map as a string for testing
+    """Return the map as a string for testing"""
     def to_string(self):
         print "\nReturning {} objects in LCSMap:\n\n".format(self.size())
         for i in range(self.size()):
